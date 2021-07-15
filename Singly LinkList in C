@@ -1,0 +1,207 @@
+Singly Link List in C
+
+#include <stdio.h>
+#include<stdlib.h>
+struct box
+{
+    int data;
+    struct box *next;
+};
+
+struct box *head=NULL;
+struct box* create()
+{
+    struct box *temp;
+    temp=(struct box*)malloc(sizeof(struct box));
+    
+    return temp;
+}
+
+void insert_at_end()
+{
+    struct box *newnode, *t;
+    newnode=create();  //address of memory allocated to new node is stored in temp
+    
+    printf("Enter the data:\t");
+    scanf("%d",&newnode->data);  //go to address of newnode and enter the data
+    newnode->next=NULL;
+    
+    if(head==NULL)
+    {
+        head=newnode;
+    }
+    else{
+        t=head;
+        while(t->next!=NULL)
+        {
+            t=t->next;  //traverse
+        }
+        t->next=newnode;
+    }
+}    
+    
+void delete_beginning()
+{
+    struct box *replace;
+    
+    if(head==NULL)
+    {
+        printf("List is empty");
+        return;
+    }
+    else{
+        replace=head;  //now head and replace are pointing to same node
+        head=head->next;  //head is pointing to next node 
+        //now replace is pointing to the node to be deleted. it was needed bcz unless we have address of node, we
+        //cannot access it.
+        free(replace);
+    }
+    
+}
+
+void delete_end(){
+    struct box *traverse_pointer,*temp;
+    traverse_pointer=head;
+    if(head==NULL)
+    {
+        printf("List is empty");
+    }
+    else{
+        while(traverse_pointer->next!=NULL)
+        {
+            
+                temp=traverse_pointer;
+                traverse_pointer=traverse_pointer->next;
+        }
+        temp->next=NULL;
+        free(traverse_pointer);
+    }
+}
+
+void insert_at_beg()
+{
+    struct box *newnode, *t;
+
+    newnode=create(); 
+    printf("Enter the data:\t");
+    scanf("%d",&newnode->data);
+    
+    if(head==NULL)
+    {
+        head=newnode;
+    }
+    else{
+       /* t=head;
+        t=t->next;
+        head=newnode;
+        newnode->next=t;*/
+        newnode->next=head;//value of head is putted into new node's next
+        head=newnode; //basically moving backwards
+    }
+}
+
+/*void insert_at_mid()
+{
+    int pos;
+    struct box *traverse_pointer;
+    traverse_pointer=head;
+    printf("Enter the position where to insert");
+    scanf("%d",&pos); 
+    while(traverse_pointer!=pos)
+    {
+        traverse_pointer=traverse_pointer->next;
+    }
+    traverse_pointer=temp;
+}*/
+void traverse()
+{
+    struct box *traverse_pointer;
+    traverse_pointer=head;
+    if(head==NULL)
+    {
+        printf("List is empty");
+    }
+    else
+    {
+        while(traverse_pointer!=NULL)
+        {
+            printf("%d\t",traverse_pointer->data);
+            traverse_pointer=traverse_pointer->next;
+        }
+    }
+}
+
+void count_nodes()
+{
+    struct box *traverse_pointer;
+    int count=0;
+    traverse_pointer=head;
+    if(head==NULL)
+    {
+        printf("Linklist is empty");
+    }
+    else
+    {
+        while(traverse_pointer!=NULL)
+        {
+            count++;
+        }
+    }
+    printf("%d",count);
+}
+
+int call_function()
+{
+    int choice;
+    int i;
+    printf("\n");
+    printf("1. Insert at end\n");
+    printf("2. Delete at beginning\n");
+    printf("3. Traverse list\n");
+    printf("4. Count total nodes\n");
+    printf("5. Delete at end\n");
+    printf("6. Insert at beginning\n");
+    printf("7. Exit\n");
+    printf("enter your choice: 1\t 2\t 3\t 4\t 5\t 6\t 7 ::\n");
+    scanf("%d",&choice);
+    
+    return choice;
+   
+}
+
+int main()
+{
+
+    while(1)
+    {
+        switch(call_function())
+        {
+        case 1:
+            insert_at_end();
+            break;
+        case 2:
+            delete_beginning();
+            break;
+        case 3:
+            traverse();
+            break;
+        case 4:
+            count_nodes();
+            break;
+        case 5:
+            delete_end();
+            break;
+        case 6:
+            insert_at_beg();
+            break;
+        case 7:
+            exit(0);
+        default:
+            printf("Invalid Input");
+            break;               
+   
+        }
+    }
+
+     return 0;
+}
