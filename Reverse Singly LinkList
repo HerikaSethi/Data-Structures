@@ -1,0 +1,96 @@
+#include<stdlib.h>
+#include <stdio.h>
+
+struct node{
+  int data;
+  struct node *next;
+};
+
+struct node *head = NULL;
+struct node* create_node()
+{
+    struct node *newnode;
+    newnode=(struct node*)malloc(sizeof(struct node));
+    
+
+    return newnode;
+}
+
+struct node* insert(int value)
+{
+    struct node *new_node,*temp;
+    new_node=create_node();
+    
+    new_node->data = value;
+    new_node->next=NULL;
+    
+    if(head==NULL)
+    {
+    head=new_node;
+    }
+    else{
+        temp=head;
+        while(temp->next!=NULL)
+        {
+            temp=temp->next;
+        }
+        temp->next=new_node;
+    }
+}
+
+void traverse()
+{
+    struct node *temp;
+    if(head==NULL)
+    {
+        printf("list is empty");
+    }
+    else{
+        temp=head;
+        while(temp!=NULL)
+        {
+            printf("%d\t",temp->data);
+            temp = temp->next;
+        }
+    }
+}
+
+struct node* reverse()
+{
+    struct node *previous, *current, *nextloc; //3 pointers created
+    struct node *temp;
+    
+    //temp=head;
+    
+    previous=NULL;
+    current=head;
+    
+    if(head==NULL)
+    {
+        printf("link list is empty");
+    }
+    else{
+        while(current!=NULL)
+        {
+        nextloc=current->next;// current position's next
+        current->next=previous; //current is directed in backwards
+        previous=current;
+        current=nextloc;
+        }
+        head=previous;
+    }
+}
+int main()
+{
+   
+    insert(52);
+    insert(67);
+    insert(1);
+    insert(14);
+    traverse();
+    reverse();
+    printf("\n");
+    printf("List after reversal::\n");
+    traverse();
+    return 0;
+}
