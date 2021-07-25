@@ -1,0 +1,90 @@
+#include <stdio.h>
+#include<stdlib.h>
+
+struct node{
+    int data;
+    struct node *next;
+};
+
+struct node *head=NULL;
+
+struct node* createnode()
+{
+    struct node *newnode;
+    newnode=(struct node*)malloc(sizeof(struct node));
+    
+    return(newnode);
+}
+
+struct node* insert(int value)
+{
+    struct node *newnode,*temp;
+
+    newnode= createnode();
+    
+    newnode->data=value;
+    newnode->next=NULL; 
+    
+    if(head==NULL)
+    {
+        head=newnode;
+        
+    }
+    else{
+        temp=head;
+        while(temp->next!=NULL)
+        {
+            temp=temp->next;
+        }
+        temp->next=newnode;
+    }
+    
+}
+
+void display()
+{
+    struct node *temp;
+    temp=head;
+    if(head==NULL)
+    {
+        printf("list is empty");
+    }
+    else{
+        
+        while(temp!=NULL)
+        {
+            printf("%d\n",temp->data);
+            temp=temp->next;
+        }
+        
+    }
+}
+
+struct node* middlenode()
+{
+    struct node *p,*q;
+    p=q=head;
+    while(q&&q->next!=NULL)  //while the node which q is pointing to is not null and q->next not null
+    {
+        p=p->next;           //point p to one node ahead from current position
+        q=q->next->next;     //point q or jump q two nodes ahead from current position, 
+    }                        //repeat until q or q-next!null
+    
+    printf("%d is the middle node",p->data);
+    
+}
+int main()
+{
+    int i;
+
+    insert(22);
+    insert(25);
+    insert(65);
+    insert(78);
+    insert(12);
+    
+    display();
+    
+    middlenode();
+    return 0;
+}
